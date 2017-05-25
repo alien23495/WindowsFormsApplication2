@@ -47,6 +47,11 @@ namespace WindowsFormsApplication2
 
                 klient = serwer.AcceptTcpClient();
 
+                IPEndPoint IP = (IPEndPoint)klient.Client.RemoteEndPoint;
+                info_o_polaczeniu.Items.Add("[" + IP.ToString() + "] : nawiazano polaczenie");
+
+
+
                 info_o_polaczeniu.Items.Add("Nawiazano polaczenie");
                 start.Enabled = false;
                 stop.Enabled = true;
@@ -66,7 +71,18 @@ namespace WindowsFormsApplication2
 
         private void stop_Click(object sender, EventArgs e)
         {
+            serwer.Stop();
+            klient.Close();
 
+            info_o_polaczeniu.Items.Add("Zakonczono prace serwera");
+            stop.Enabled = false;
+            start.Enabled = true;
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            stop.Enabled = false;
         }
     }
 }
