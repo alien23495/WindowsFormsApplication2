@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Sockets;
+using System.Net;
 
 namespace WindowsFormsApplication2
 {
@@ -15,6 +17,56 @@ namespace WindowsFormsApplication2
         public Form1()
         {
             InitializeComponent();
+        }
+
+
+        private TcpListener serwer = null;
+        private TcpClient klient = null;
+
+
+        private void start_Click(object sender, EventArgs e)
+        {
+            IPAddress adresIP = null;
+            try
+            {
+                adresIP = IPAddress.Parse(adres.Text);
+
+            }
+            catch
+            {
+                MessageBox.Show("Błedny format adresu ip", "Błąd");
+                adres.Text = String.Empty;
+                return;
+            }
+
+            int port = System.Convert.ToInt32(my_port.Value);
+            try
+            {
+                serwer = new TcpListener(adresIP, port);
+                serwer.Start();
+
+                klient = serwer.AcceptTcpClient();
+
+                info_o_polaczeniu.Items.Add("Nawiazano polaczenie");
+                start.Enabled = false;
+                stop.Enabled = true;
+
+                klient.Close();
+                serwer.Stop();
+            }
+            catch(Exception ex)
+            {
+                info_o_polaczeniu.Items.Add("Bład inicjalizacji serwera");
+                MessageBox.Show(ex.ToString(), "Błąd");
+            }
+
+
+
+        }
+
+        private void stop_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

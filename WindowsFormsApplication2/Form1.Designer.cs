@@ -46,6 +46,7 @@
             this.start.TabIndex = 0;
             this.start.Text = "start";
             this.start.UseVisualStyleBackColor = true;
+            this.start.Click += new System.EventHandler(this.start_Click);
             // 
             // stop
             // 
@@ -55,6 +56,7 @@
             this.stop.TabIndex = 1;
             this.stop.Text = "stop";
             this.stop.UseVisualStyleBackColor = true;
+            this.stop.Click += new System.EventHandler(this.stop_Click);
             // 
             // info_o_polaczeniu
             // 
